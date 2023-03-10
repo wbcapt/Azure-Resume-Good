@@ -1,31 +1,33 @@
+# Deploys when push is made from front end folder
+# added paths variable on line 9 because this allows you to track changes from just frontend folder
+# added the active versions
 name: deploy_frontend
-# Deploys when push is made from frontend folder, changed this name
 
 on:
     push:
         branches: [ main ]
         paths:
           - 'frontend/**'
-        #added the paths variable so anytime a change is made in front end it's picked up
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     - uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-#modified the inlinescipt below for my storage account name bldstg2 and added frontend/
+
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
+        activeversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name bldstg2 --auth-mode key -d '$web' -s frontend/ 
+            az storage blob upload-batch --account-name bldstg2 -d '$web' -s frontend/
     - name: Purge CDN endpoint
       uses: azure/CLI@v1
-      #added my CDN profile name, endpoint name, and resource group name
       with:
+        activeversion: 2.0.72
         inlineScript: |
            az cdn endpoint purge --content-paths  "/*" --profile-name "ResumeCDN" --name "wbldcldcpaep1" --resource-group "ACGResumeChallenge"
 
