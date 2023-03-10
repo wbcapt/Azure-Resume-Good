@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -21,13 +21,11 @@ jobs:
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
-        activeversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name bldstg2 -d '$web' -s frontend/
+            az storage blob upload-batch --account-name bldstg2 --auth-mode -d '$web' -s frontend/
     - name: Purge CDN endpoint
       uses: azure/CLI@v1
       with:
-        activeversion: 2.0.72
         inlineScript: |
            az cdn endpoint purge --content-paths  "/*" --profile-name "ResumeCDN" --name "wbldcldcpaep1" --resource-group "ACGResumeChallenge"
 
