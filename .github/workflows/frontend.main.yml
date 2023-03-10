@@ -1,6 +1,7 @@
 # Deploys when push is made from front end folder
 # added paths variable on line 9 because this allows you to track changes from just frontend folder
 # added the active versions
+#also had to add and specify the azcli version in the upload to blob storage condition, because 2.34 doesn't purge by default for some reason
 name: deploy_frontend
 
 on:
