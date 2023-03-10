@@ -21,7 +21,7 @@ jobs:
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
-        azcliveversion: 2.33.1
+        azcliversion: 2.33.1
         inlineScript: |
             az storage blob upload-batch --account-name bldstg2 -d '$web' -s frontend/
     - name: Purge CDN endpoint
