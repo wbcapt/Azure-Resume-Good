@@ -16,7 +16,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: 'Checkout GitHub action'
-      uses: actions/checkout@v2 #maybe this needs to be /checkout@main?
+      uses: actions/checkout@main #maybe this needs to be /checkout@main? this was @v2 originally
 
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
